@@ -1,0 +1,30 @@
+{
+  "name": "netsuite-poc",
+  "version": "1.0.0",
+  "description": "Standalone Express + NetSuite integration POC (OAuth JWT, Redis token cache, SuiteQL, retry, mock fallback, program sync).",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "dev:prepare": "mkdir -p dev/pgsql/data",
+    "dev:start": "npm run dev:prepare && docker compose up -d --build",
+    "dev:stop": "docker compose down --remove-orphans",
+    "dev:restart": "npm run dev:stop && npm run dev:start",
+    "dev:logs": "docker compose logs -f app"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "axios-retry": "^4.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "pg": "^8.13.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
