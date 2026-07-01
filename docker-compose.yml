@@ -63,6 +63,12 @@ services:
       REDIS_URL: "redis://redis:6379"
       DATABASE_URL: "postgres://poc:poc@postgres:5432/netsuite_poc"
       DATABASE_SCHEMA: "public"
+    # Live-reload for local dev: bind-mount the source over the baked-in copy and
+    # run with Node's built-in --watch so host edits restart the app automatically
+    # (no image rebuild needed). Remove these two keys to run the baked image as-is.
+    volumes:
+      - ./src:/app/src
+    command: ["node", "--watch", "src/server.js"]
     depends_on:
       postgres:
         condition: service_healthy
