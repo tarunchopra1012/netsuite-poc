@@ -3,6 +3,7 @@ name: netsuite-poc
 services:
   postgres:
     image: postgres:15.5
+    container_name: postgres
     environment:
       POSTGRES_USER: poc
       POSTGRES_PASSWORD: poc
@@ -21,6 +22,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    container_name: redis
     ports:
       - "6380:6379"
     healthcheck:
@@ -29,10 +31,24 @@ services:
       timeout: 3s
       retries: 10
 
+  # Browser-based Redis GUI. Open http://localhost:8081 to inspect keys
+  # (e.g. the cached netsuite:access_token). Talks to redis over the compose network.
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    environment:
+      REDIS_HOSTS: "local:redis:6379"
+    ports:
+      - "8081:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: app
     ports:
       - "8080:8080"
     # Load NetSuite creds (+ NETSUITE_MODE) from .env if present. Missing file is fine:
