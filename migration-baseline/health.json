@@ -1,0 +1,7 @@
+{
+    "status": "ok",
+    "mode": "live",
+    "netsuiteReachable": true,
+    "redis": true,
+    "postgres": true
+}
