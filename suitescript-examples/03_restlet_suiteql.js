@@ -18,22 +18,23 @@
  * Entry points map to HTTP verbs: get, post, put, delete.
  */
 define(['N/query', 'N/log'], (query, log) => {
-
   // GET /...?type=SalesOrd&limit=5  → returns matching transactions as JSON.
   const get = (requestParams) => {
     const type = String(requestParams.type || 'SalesOrd').replace(/[^A-Za-z]/g, '');
     let limit = parseInt(requestParams.limit, 10);
     if (!Number.isFinite(limit) || limit < 1 || limit > 50) limit = 5;
 
-    const results = query.runSuiteQL({
-      query: `
+    const results = query
+      .runSuiteQL({
+        query: `
         SELECT id, tranid, trandate, BUILTIN.DF(entity) AS customer
         FROM transaction
         WHERE type = ?
         ORDER BY trandate DESC
       `,
-      params: [type],
-    }).asMappedResults();
+        params: [type],
+      })
+      .asMappedResults();
 
     return { count: Math.min(results.length, limit), items: results.slice(0, limit) };
   };

@@ -1,0 +1,8 @@
+dist
+node_modules
+.nx
+coverage
+*.lock
+src
+suitescript-examples
+migration-baseline

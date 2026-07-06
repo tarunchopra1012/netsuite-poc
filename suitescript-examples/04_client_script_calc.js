@@ -16,7 +16,6 @@
  *   live — showing the code is enough for the interview.
  */
 define(['N/log'], (log) => {
-
   const pageInit = (context) => {
     log.debug({ title: 'pageInit', details: `mode=${context.mode}` });
   };

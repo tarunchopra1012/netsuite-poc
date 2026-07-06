@@ -16,7 +16,6 @@
  *   Then edit that record type and open the script's "View Execution Log".
  */
 define(['N/log', 'N/error'], (log, error) => {
-
   const beforeLoad = (context) => {
     log.debug({ title: 'beforeLoad', details: `type=${context.type}` });
   };
