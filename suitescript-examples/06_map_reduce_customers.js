@@ -14,12 +14,13 @@
  *   getInputData → map → reduce → summarize
  */
 define(['N/query', 'N/log'], (query, log) => {
-
   // 1) Return the dataset to process (array or a query/search).
   const getInputData = () =>
-    query.runSuiteQL({
-      query: `SELECT id, companyname FROM customer WHERE isinactive = 'F'`,
-    }).asMappedResults();
+    query
+      .runSuiteQL({
+        query: `SELECT id, companyname FROM customer WHERE isinactive = 'F'`,
+      })
+      .asMappedResults();
 
   // 2) map runs once per input row. context.value is a JSON string.
   const map = (context) => {

@@ -4,16 +4,33 @@
   "description": "Standalone Express + NetSuite integration POC (OAuth JWT, Redis token cache, SuiteQL, retry, mock fallback, program sync).",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
+    "legacy:start": "node src/server.js",
+    "legacy:dev": "node --watch src/server.js",
     "dev:prepare": "mkdir -p dev/pgsql/data",
     "dev:start": "npm run dev:prepare && docker compose up -d --build",
     "dev:stop": "docker compose down --remove-orphans",
     "dev:restart": "npm run dev:stop && npm run dev:start",
-    "dev:logs": "docker compose logs -f app"
+    "dev:logs": "docker compose logs -f app",
+    "prepare": "node .husky/install.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prettier-pre-commit": "pretty-quick --staged",
+    "graph": "nx graph",
+    "lint:all": "nx run-many --target=lint --all",
+    "test:all": "nx run-many --target=test --all",
+    "build:all": "nx run-many --target=build --all"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -26,5 +43,31 @@
     "node-cron": "^3.0.3",
     "pg": "^8.13.0",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@nx/eslint": "^23.0.1",
+    "@nx/eslint-plugin": "^23.0.1",
+    "@nx/jest": "^23.0.1",
+    "@nx/js": "^23.0.1",
+    "@nx/nest": "^23.0.1",
+    "@nx/react": "^23.0.1",
+    "@nx/webpack": "^23.0.1",
+    "@types/node": "^26.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "@typescript-eslint/parser": "^8.62.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "jsonc-eslint-parser": "^3.1.0",
+    "lint-staged": "^17.0.8",
+    "nx": "^23.0.1",
+    "prettier": "^3.9.4",
+    "pretty-quick": "^4.2.2",
+    "ts-jest": "^29.4.11",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.62.1"
   }
 }

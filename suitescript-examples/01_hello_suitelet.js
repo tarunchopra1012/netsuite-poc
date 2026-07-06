@@ -22,7 +22,6 @@
  *   &type=CustInvc          (customer invoices)
  */
 define(['N/query'], (query) => {
-
   const onRequest = (context) => {
     try {
       const params = context.request.parameters;
@@ -34,8 +33,9 @@ define(['N/query'], (query) => {
 
       // --- run SuiteQL. `params` = bind parameters (?), the injection-safe
       //     way — a nice talking point vs. the string-built queries in the POC.
-      const results = query.runSuiteQL({
-        query: `
+      const results = query
+        .runSuiteQL({
+          query: `
           SELECT
             id,
             tranid,
@@ -46,20 +46,26 @@ define(['N/query'], (query) => {
           WHERE type = ?
           ORDER BY trandate DESC
         `,
-        params: [type],
-      }).asMappedResults();
+          params: [type],
+        })
+        .asMappedResults();
 
       const items = results.slice(0, limit);
 
       // --- return clean JSON ---
       context.response.setHeader({ name: 'Content-Type', value: 'application/json' });
-      context.response.write(JSON.stringify({
-        source: 'suitescript-suitelet',
-        type,
-        count: items.length,
-        items,
-      }, null, 2));
-
+      context.response.write(
+        JSON.stringify(
+          {
+            source: 'suitescript-suitelet',
+            type,
+            count: items.length,
+            items,
+          },
+          null,
+          2,
+        ),
+      );
     } catch (e) {
       context.response.setHeader({ name: 'Content-Type', value: 'application/json' });
       context.response.write(JSON.stringify({ error: e.message }, null, 2));

@@ -12,18 +12,19 @@
  * Entry point: execute.
  */
 define(['N/query', 'N/log'], (query, log) => {
-
   const execute = (context) => {
     log.audit({ title: 'Scheduled sync started', details: new Date().toISOString() });
 
-    const rows = query.runSuiteQL({
-      query: `
+    const rows = query
+      .runSuiteQL({
+        query: `
         SELECT id, entityid, companyname, email
         FROM customer
         WHERE isinactive = 'F'
         ORDER BY lastmodifieddate DESC
       `,
-    }).asMappedResults();
+      })
+      .asMappedResults();
 
     log.audit({ title: 'Active customers fetched', details: rows.length });
 

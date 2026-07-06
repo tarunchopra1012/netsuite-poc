@@ -1,10 +1,10 @@
 # NetSuite Integration POC (Express + plain JS)
 
 **🚧 Migration in progress — Express → Nx monorepo (NestJS + React).**
-This repository is being incrementally migrated, following a phase-by-phase.
+This repository is being incrementally migrated, following a phase-by-phase
+playbook kept locally in `.cursor/Docs/migration/` (untracked — not on GitHub).
 
-**Status: Phase 0 complete** — baseline captured, Node pinned to 22.
-The Express app below still runs unchanged.
+**Status: Phase 1 complete** — Nx 23 workspace foundation added; Express app unchanged.
 
 A small but production-credible **proof of concept** that integrates with **NetSuite**,
 built as a standalone **Node.js + Express (CommonJS)** app. It mirrors the real Team Shop
@@ -21,7 +21,23 @@ demo still works). See [`SUMMARY.md`](./SUMMARY.md) for how the real production 
 
 ---
 
-## Quick start (`docker compose up`)
+## Monorepo (Nx) — work in progress
+
+This repo is becoming an Nx monorepo. Foundation is in place; apps and libraries arrive in
+later phases.
+
+```bash
+nvm use                 # Node 22 (see .nvmrc)
+npm install
+npx nx show projects    # lists Nx projects (empty until Phase 2)
+npx nx graph            # dependency graph
+```
+
+Everything under **"Legacy Express app"** below still runs as before.
+
+---
+
+## Legacy Express app (being retired) — quick start (`docker compose up`)
 
 ```bash
 cd netsuite-poc
@@ -59,7 +75,7 @@ cd netsuite-poc
 cp .env.example .env       # defaults are fine for mock/auto
 npm install
 # needs a local Redis + Postgres, or just run via docker compose
-npm run dev
+npm run legacy:dev
 ```
 
 ---
