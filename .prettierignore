@@ -3,6 +3,7 @@ node_modules
 .nx
 coverage
 *.lock
-src
-suitescript-examples
-migration-baseline
+# Legacy code keeps its own style (anchored — a bare "src" would also match libs/*/src)
+/src
+/suitescript-examples
+/migration-baseline

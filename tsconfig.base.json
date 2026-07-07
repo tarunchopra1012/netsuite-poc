@@ -4,8 +4,8 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node10", // NOT "bundler"
-    "emitDecoratorMetadata": true, // required for NestJS DI
+    "moduleResolution": "node10",
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
@@ -13,7 +13,12 @@
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nsp/types": ["./libs/types/src/index.ts"],
+      "@nsp/utils": ["./libs/utils/src/index.ts"],
+      "@nsp/core": ["./libs/core/src/index.ts"],
+      "@nsp/nest-kernel": ["./libs/nest-kernel/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

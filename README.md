@@ -4,7 +4,7 @@
 This repository is being incrementally migrated, following a phase-by-phase
 playbook kept locally in `.cursor/Docs/migration/` (untracked — not on GitHub).
 
-**Status: Phase 1 complete** — Nx 23 workspace foundation added; Express app unchanged.
+**Status: Phase 2 complete** — shared libraries added (`@nsp/types`, `@nsp/utils`, `@nsp/core`, `@nsp/nest-kernel`); Express app unchanged.
 
 A small but production-credible **proof of concept** that integrates with **NetSuite**,
 built as a standalone **Node.js + Express (CommonJS)** app. It mirrors the real Team Shop
@@ -29,8 +29,23 @@ later phases.
 ```bash
 nvm use                 # Node 22 (see .nvmrc)
 npm install
-npx nx show projects    # lists Nx projects (empty until Phase 2)
-npx nx graph            # dependency graph
+npx nx show projects    # types, utils, core, nest-kernel
+npx nx graph            # dependency graph (nest-kernel → core)
+```
+
+### Shared libraries
+
+| Import             | Purpose                                                                 |
+| ------------------ | ----------------------------------------------------------------------- |
+| `@nsp/types`       | Shared DTOs (orders, customers, programs, auth) + API URL enums         |
+| `@nsp/utils`       | Pure helpers (date formatting, …)                                       |
+| `@nsp/core`        | DDD building blocks: `AppError`, `BaseSpecs`, `Pagination`              |
+| `@nsp/nest-kernel` | NestJS infra: `BaseRepository`, `@Api`/`@DtoProperty`, `AppErrorFilter` |
+
+```bash
+npx nx run-many --target=lint --projects=types,utils,core,nest-kernel
+npx nx run-many --target=test --projects=types,utils,core,nest-kernel
+npx nx run-many --target=build --projects=types,utils   # only the tsc-built libs build
 ```
 
 Everything under **"Legacy Express app"** below still runs as before.
