@@ -1,3 +1,7 @@
-src/
-init.sql
-migration-baseline/
+# Legacy Express app — not an Nx project. Retired in Phase 8.
+# NOTE: patterns use gitignore semantics — the leading "/" anchors to the repo
+# root. An unanchored "src/" would also match every lib's "libs/*/src/" and
+# silently break dependency analysis (empty nx graph).
+/src/
+/init.sql
+/migration-baseline/
