@@ -17,7 +17,8 @@
       "@nsp/types": ["./libs/types/src/index.ts"],
       "@nsp/utils": ["./libs/utils/src/index.ts"],
       "@nsp/core": ["./libs/core/src/index.ts"],
-      "@nsp/nest-kernel": ["./libs/nest-kernel/src/index.ts"]
+      "@nsp/nest-kernel": ["./libs/nest-kernel/src/index.ts"],
+      "@nsp/netsuite": ["./libs/netsuite/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

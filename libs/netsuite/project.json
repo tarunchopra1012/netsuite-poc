@@ -1,0 +1,19 @@
+{
+  "name": "netsuite",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/netsuite/src",
+  "projectType": "library",
+  "tags": ["type:data-access"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/netsuite",
+        "main": "libs/netsuite/src/index.ts",
+        "tsConfig": "libs/netsuite/tsconfig.lib.json",
+        "assets": ["libs/netsuite/*.md"]
+      }
+    }
+  }
+}
