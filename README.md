@@ -4,7 +4,7 @@
 This repository is being incrementally migrated, following a phase-by-phase
 playbook kept locally in `.cursor/Docs/migration/` (untracked — not on GitHub).
 
-**Status: Phase 2 complete** — shared libraries added (`@nsp/types`, `@nsp/utils`, `@nsp/core`, `@nsp/nest-kernel`); Express app unchanged.
+**Status: Phase 3 complete — NetSuite integration ported to `@nsp/netsuite`** — shared libraries added (`@nsp/types`, `@nsp/utils`, `@nsp/core`, `@nsp/nest-kernel`, `@nsp/netsuite`); Express app unchanged.
 
 A small but production-credible **proof of concept** that integrates with **NetSuite**,
 built as a standalone **Node.js + Express (CommonJS)** app. It mirrors the real Team Shop
@@ -29,18 +29,22 @@ later phases.
 ```bash
 nvm use                 # Node 22 (see .nvmrc)
 npm install
-npx nx show projects    # types, utils, core, nest-kernel
+npx nx show projects    # types, utils, core, nest-kernel, netsuite
 npx nx graph            # dependency graph (nest-kernel → core)
 ```
 
 ### Shared libraries
 
-| Import             | Purpose                                                                 |
-| ------------------ | ----------------------------------------------------------------------- |
-| `@nsp/types`       | Shared DTOs (orders, customers, programs, auth) + API URL enums         |
-| `@nsp/utils`       | Pure helpers (date formatting, …)                                       |
-| `@nsp/core`        | DDD building blocks: `AppError`, `BaseSpecs`, `Pagination`              |
-| `@nsp/nest-kernel` | NestJS infra: `BaseRepository`, `@Api`/`@DtoProperty`, `AppErrorFilter` |
+| Import             | Purpose                                                                                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@nsp/types`       | Shared DTOs (orders, customers, programs, auth) + API URL enums                                                                                          |
+| `@nsp/utils`       | Pure helpers (date formatting, …)                                                                                                                        |
+| `@nsp/core`        | DDD building blocks: `AppError`, `BaseSpecs`, `Pagination`                                                                                               |
+| `@nsp/nest-kernel` | NestJS infra: `BaseRepository`, `@Api`/`@DtoProperty`, `AppErrorFilter`                                                                                  |
+| `@nsp/netsuite`    | **Backend-only.** NetSuite OAuth + Redis token cache, SuiteQL client with retry/variant fallback, queries, mappers, mock. Never import from the browser. |
+
+> ⚠️ `@nsp/netsuite` holds the NetSuite private key and access token. It is server-side only —
+> never import it from `web`, `libs/ui`, or `libs/data-access`.
 
 ```bash
 npx nx run-many --target=lint --projects=types,utils,core,nest-kernel
